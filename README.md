@@ -59,7 +59,7 @@ The goal of tagging is to infer a set of labels for each image. The following da
 
 ### Initial setup
 
-First, set the `RASTER_VISION_DATA_DIR` environment variable on your host machine. If you are not at Azavea and want to use the deployment code, you will need to set the `RASTER_VISION_S3_BUCKET` environment variable and update various values in
+First, set the `RASTER_VISION_DATA_DIR` environment variable on your host machine. If you are not at Azavea and want to use the deployment code, you will need to set the `RASTER_VISION_BUCKET` environment variable and update various values in
 [deployment/terraform/variables.tf](deployment/terraform/variables.tf).
 
 From within the project root, execute the following commands.
