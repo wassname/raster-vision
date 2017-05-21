@@ -1,10 +1,11 @@
 {
     "batch_size": 8,
     "git_commit": "23c528b",
-    "dataset_name": "potsdam",
+    "problem_type": "semseg",
+    "dataset_name": "isprs/potsdam",
     "generator_name": "numpy",
     "active_input_inds": [3, 0, 1, 4],
-    "use_pretraining": true,
+    "use_pretraining": false,
     "freeze_base": false,
     "train_stages": [
         {
@@ -34,5 +35,7 @@
     "model_type": "fcn_resnet",
     "nb_val_samples": 512,
     "run_name": "5_20_17/fcn/fcn_resnet_irrg_cross_2",
-    "samples_per_epoch": 4096
+    "samples_per_epoch": 4096,
+    "steps_per_epoch": 512,
+    "validation_steps": 64
 }
