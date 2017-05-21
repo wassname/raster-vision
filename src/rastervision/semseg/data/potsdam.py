@@ -99,13 +99,16 @@ class PotsdamImageFileGenerator(PotsdamFileGenerator):
 
     def get_img(self, file_ind, window):
         ind0, ind1 = file_ind
-
+        # Data can be found at TODO
+        dsm_file = 'DSM_normalisation_with_geotrellis_byte/normalized-byte-dsm_potsdam_{:0>2}_{:0>2}.tif'.format(ind0, ind1)
+        # dsm_file = '1_DSM_normalisation/dsm_potsdam_{:0>2}_{:0>2}_normalized_lastools.jpg'.format(ind0, ind1)
         rgbir_file_path = join(
             self.dataset_path,
             '4_Ortho_RGBIR/top_potsdam_{}_{}_RGBIR.tif'.format(ind0, ind1))
         depth_file_path = join(
             self.dataset_path,
-            '1_DSM_normalisation/dsm_potsdam_{:0>2}_{:0>2}_normalized_lastools.jpg'.format(ind0, ind1)) # noqa
+            dsm_file
+        ) # noqa
         batch_y_file_path = join(
             self.dataset_path,
             '5_Labels_for_participants/top_potsdam_{}_{}_label.tif'.format(ind0, ind1)) # noqa
