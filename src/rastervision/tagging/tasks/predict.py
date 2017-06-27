@@ -62,7 +62,6 @@ def compute_probs(run_path, model, options, generator, split):
 def compute_preds(run_path, options, generator, split):
     probs_path = join(run_path, '{}_probs.npy'.format(split))
     y_probs = np.load(probs_path)
-
     predictions_path = join(run_path, '{}_preds.csv'.format(split))
     thresholds = load_thresholds(run_path)
     tag_store = TagStore()

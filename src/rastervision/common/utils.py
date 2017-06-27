@@ -15,6 +15,8 @@ from rastervision.common.settings import (
     s3_results_path, results_path, s3_datasets_path, datasets_path,
     s3_weights_path, weights_path, s3_bucket)
 
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
 
 def _makedirs(path):
     try:
@@ -163,13 +165,18 @@ def download_dataset(dataset_name, file_names):
         datasets_path, dataset_name)
     s3_dataset_path = join(s3_datasets_path, dataset_name)
 
+    # HACK
+    # src_path = "s3://raster-vision/results/tagging/6_22_17/baseline/thresholds.json"
+    # dst_path = "/opt/data/results/tagging/6_22_17/baseline/thresholds.json"
+    # s3_cp(src_path, dst_path)
+
     if not isdir(dataset_path):
         _makedirs(dataset_path)
 
         def get_file(file_name):
-            print('Downloading {}...'.format(file_name))
             src_path = join(s3_dataset_path, file_name)
             dst_path = join(dataset_path, file_name)
+            eprint('Downloading {} from {} to {}...'.format(file_name, src_path, dst_path))
             s3_cp(src_path, dst_path)
             _, file_ext = splitext(file_name)
             if file_ext == '.zip':
@@ -178,6 +185,9 @@ def download_dataset(dataset_name, file_names):
 
         for file_name in file_names:
             get_file(file_name)
+    eprint("Dataset directory files in %s:" % dataset_path)
+    for x in os.listdir(dataset_path):
+        eprint(" - " + x)
 
 def download_weights(file_name):
     print('Downloading {}...'.format(file_name))
