@@ -165,11 +165,6 @@ def download_dataset(dataset_name, file_names):
         datasets_path, dataset_name)
     s3_dataset_path = join(s3_datasets_path, dataset_name)
 
-    # HACK
-    # src_path = "s3://raster-vision/results/tagging/6_22_17/baseline/thresholds.json"
-    # dst_path = "/opt/data/results/tagging/6_22_17/baseline/thresholds.json"
-    # s3_cp(src_path, dst_path)
-
     if not isdir(dataset_path):
         _makedirs(dataset_path)
 
