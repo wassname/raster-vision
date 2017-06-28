@@ -5,8 +5,8 @@ DenseNet 169 Model for Keras
 Model Schema is based on
 https://github.com/flyyufelix/DenseNet-Keras
 ImageNet Pretrained Weights
-Theano: https://drive.google.com/open?id=0Byy2AcGyEVxfMlRYb3YzV210VzQ
-TensorFlow: https://drive.google.com/open?id=0Byy2AcGyEVxfSTA4SHJVOHNuTXc
+Theano: https://drive.google.com/open?id=0Byy2AcGyEVxfN0d3T1F1MXg0NlU
+TensorFlow: https://drive.google.com/open?id=0Byy2AcGyEVxfSEc5UC1ROUFJdmM
 """
 
 from os.path import exists, join
@@ -26,7 +26,8 @@ from rastervision.common.settings import weights_path
 from rastervision.common.models.custom_layers import Scale
 from rastervision.common.utils import download_weights
 
-def DenseNet121(nb_dense_block=4, growth_rate=32, nb_filter=64, reduction=0.5,
+
+def DenseNet169(nb_dense_block=4, growth_rate=32, nb_filter=64, reduction=0.5,
                 dropout_rate=0.0, weight_decay=1e-4, weights=None,
                 classes=1000, input_shape=None, activation='softmax'):
     '''
@@ -55,7 +56,7 @@ def DenseNet121(nb_dense_block=4, growth_rate=32, nb_filter=64, reduction=0.5,
 
     # From architecture for ImageNet (Table 1 in the paper)
     nb_filter = 64
-    nb_layers = [6,12,24,16] # For DenseNet-121
+    nb_layers = [6,12,32,32] # For DenseNet-169
 
     # Initial convolution
     x = ZeroPadding2D((3, 3), name='conv1_zeropadding')(img_input)
@@ -90,9 +91,9 @@ def DenseNet121(nb_dense_block=4, growth_rate=32, nb_filter=64, reduction=0.5,
 
     # load weights
     if weights == 'imagenet':
-        path = join(weights_path, 'densenet121_weights_tf.h5')
+        path = join(weights_path, 'densenet169_weights_tf.h5')
         if not exists(path):
-            download_weights('densenet121_weights_tf.h5')
+            download_weights('densenet169_weights_tf.h5')
         model.load_weights(path, by_name=True)
 
     # Truncate and replace softmax layer for transfer learning

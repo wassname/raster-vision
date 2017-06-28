@@ -1,3 +1,11 @@
+# flake8: noqa
+# -*- coding: utf-8 -*-
+"""
+Custom Scale Layer for Keras
+This code is based on
+https://github.com/flyyufelix/DenseNet-Keras
+"""
+
 from keras import initializers
 from keras.engine import Layer, InputSpec
 

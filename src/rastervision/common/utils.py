@@ -195,6 +195,13 @@ def download_weights(file_name):
     dst_path = join(weights_path, file_name)
     s3_cp(src_path, dst_path)
 
+def download_weights(file_name):
+    print('Downloading {}...'.format(file_name))
+    src_path = join(s3_weights_path, file_name)
+    dst_path = join(weights_path, file_name)
+    s3_cp(src_path, dst_path)
+
+
 def make_sync_results(run_name):
     def sync_results(download=False):
         s3_run_path = join(s3_results_path, run_name)
