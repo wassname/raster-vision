@@ -182,7 +182,7 @@ def make_chips(image_path, json_path, output_dir, debug=False,
                             chip_im)
 
     # save csv.
-    chip_csv_path = join(output_dir, 'chips.csv')
+    chip_csv_path = join(output_dir, 'annotations.csv')
     write_chips_csv(chip_csv_path, chip_rows)
 
 

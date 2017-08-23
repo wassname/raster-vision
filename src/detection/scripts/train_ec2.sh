@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Train SSD Mobilenet using TF Object Detection API on Pets dataset
-
-CONFIG=$1
+# Train SSD Mobilenet using TF Object Detection API
+DATA_ZIP=$1
 # CONFIG=configs/ssd_mobilenet_v1_pets.config
-RUN=$2
+CONFIG=$2
+RUN=$3
 # RUN="pets0"
 SYNC_INTERVAL="15m"
 
@@ -14,12 +14,13 @@ cd /opt/src/detection
 rm -R /opt/data/results/detection/$RUN
 aws s3 sync s3://raster-vision/results/detection/$RUN /opt/data/results/detection/$RUN
 
-# download data and model and unzip
+# download pre-trained model (to use as starting point) and unzip
 aws s3 cp s3://raster-vision/datasets/detection/models/ssd_mobilenet_v1_coco_11_06_2017.zip /opt/data/datasets/detection/models/
 unzip -o /opt/data/datasets/detection/models/ssd_mobilenet_v1_coco_11_06_2017.zip -d /opt/data/datasets/detection/models/
 
-aws s3 cp s3://raster-vision/datasets/detection/pets.zip /opt/data/datasets/detection/
-unzip -o /opt/data/datasets/detection/pets.zip -d /opt/data/datasets/detection/
+# download training data and unzip
+aws s3 cp s3://raster-vision/datasets/detection/$DATA_ZIP /opt/data/datasets/detection/
+unzip -o /opt/data/datasets/detection/$DATA_ZIP -d /opt/data/datasets/detection/
 
 /opt/src/detection/scripts/s3_sync.sh $SYNC_INTERVAL $RUN &
 
