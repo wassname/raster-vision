@@ -30,10 +30,16 @@ src/detection/scripts/batch_submit.py lf/train-ships \
 ```
 You can view the progress of the training using Tensorboard by pointing your browser at `<ec2 instance ip>:6006`. When you are satisfied with the results, you need to kill the job since it's running in an infinite loop. Recent model checkpoints are synced to the S3 bucket under `results/detection/ships0`.
 
+In order to use the model for prediction, you will first need to convert a checkpoint file to a frozen inference graph.
+
+```
+
+```
+
 ### Making predictions for individual images on EC2
 To start a prediction job, you can run
 ```
-src/detection/scripts/batch_submit.py lf/detect \
+src/detection/scripts/batch_submit.py lf/train-ships \
     /opt/src/detection/scripts/predict_ec2.sh \
     /opt/src/detection/configs/ssd_mobilenet_v1_pets.config pets0 135656
 ```
@@ -69,12 +75,3 @@ python scripts/aggregate_predictions.py \
 Due to the sliding window approach, sometimes there are multiple detections where there should be one, so we group them using a clustering algorithm in OpenCV. There is an `eps` parameter in `detection/scripts/aggregate_predictions.py` that will probably need to be tuned further depending on the dataset. Here are the predictions before and after grouping.
 ![Predictions on animal montage](img/animal_montage_predictions.jpg)
 ![Predictions on animal montage with detection grouping](img/animal_montage_predictions2.jpg)
-
-### Converting to TFRecord format
-The real ships dataset isn't ready yet, so we are using a mock ships dataset. To convert this to TFRecord format, run this command locally in the CPU container.
-```
-python src/detection/scripts/create_ships_tf_record.py \
-    --data_dir=/opt/data/datasets/detection/mock_ships \
-    --output_dir=/opt/data/datasets/detection/mock_ships \
-    --label_map_path=/opt/data/datasets/detection/mock_ships/ships_label_map.pbtxt
-```

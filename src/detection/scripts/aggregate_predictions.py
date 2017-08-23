@@ -275,11 +275,11 @@ def aggregate_predictions(image_path, window_info_path, predictions_path,
     # we group them together.
     boxes, classes, scores = group_predictions(boxes, classes, scores, im_size)
 
-    agg_predictions_path = join(output_dir, 'agg_predictions.json')
+    agg_predictions_path = join(output_dir, 'predictions.geojson')
     save_geojson(agg_predictions_path, boxes, classes, scores, im_size,
                  category_index, image_dataset=image_dataset)
 
-    plot_path = join(output_dir, 'agg_predictions.jpg')
+    plot_path = join(output_dir, 'predictions.jpg')
     plot_predictions(plot_path, im, category_index, boxes, scores, classes)
 
 

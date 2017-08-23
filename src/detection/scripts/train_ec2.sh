@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Train SSD Mobilenet using TF Object Detection API
-DATA_ZIP=$1
-# CONFIG=configs/ssd_mobilenet_v1_pets.config
+DATA=$1
+# DATA=singapore_ships_chips_tiny
 CONFIG=$2
+# CONFIG=/opt/src/detection/config/ssd_mobilenet_v1_pets.config
 RUN=$3
 # RUN="pets0"
 SYNC_INTERVAL="15m"
@@ -19,8 +19,8 @@ aws s3 cp s3://raster-vision/datasets/detection/models/ssd_mobilenet_v1_coco_11_
 unzip -o /opt/data/datasets/detection/models/ssd_mobilenet_v1_coco_11_06_2017.zip -d /opt/data/datasets/detection/models/
 
 # download training data and unzip
-aws s3 cp s3://raster-vision/datasets/detection/$DATA_ZIP /opt/data/datasets/detection/
-unzip -o /opt/data/datasets/detection/$DATA_ZIP -d /opt/data/datasets/detection/
+aws s3 cp s3://raster-vision/datasets/detection/${DATA}.zip /opt/data/datasets/detection/
+unzip -o /opt/data/datasets/detection/${DATA}.zip -d /opt/data/datasets/detection/
 
 /opt/src/detection/scripts/s3_sync.sh $SYNC_INTERVAL $RUN &
 
