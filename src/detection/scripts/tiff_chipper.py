@@ -24,7 +24,8 @@ def get_boxes_from_geojson(json_path, image_dataset):
     for feature in features:
         polygon = feature['geometry']['coordinates'][0]
         # Convert to pixel coords.
-        polygon = np.array([image_dataset.index(p[0], p[1]) for p in polygon])
+        polygon = [image_dataset.index(p[0], p[1]) for p in polygon]
+        polygon = np.array([(p[1], p[0]) for p in polygon])
 
         xmin, ymin = np.min(polygon, axis=0)
         xmax, ymax = np.max(polygon, axis=0)
@@ -63,10 +64,10 @@ def make_debug_plot(output_debug_dir, boxes, box_ind, im):
 
     for box in boxes:
         xmin, ymin, xmax, ymax = box
-        debug_im[xmin, ymin:ymax, :] = 0
-        debug_im[xmax - 1, ymin:ymax, :] = 0
-        debug_im[xmin:xmax, ymin, :] = 0
-        debug_im[xmin:xmax, ymax - 1, :] = 0
+        debug_im[ymin:ymax, xmin, :] = 0
+        debug_im[ymin:ymax, xmax - 1, :] = 0
+        debug_im[ymin, xmin:xmax, :] = 0
+        debug_im[ymax - 1, xmin:xmax, :] = 0
 
     debug_path = join(
         output_debug_dir, '{}.jpg'.format(box_ind))
@@ -135,7 +136,7 @@ def make_chips(image_path, json_path, output_dir, debug=False,
         # extract random window around anchor_box.
         chip_file_name = '{}.jpg'.format(chip_ind)
         rand_x, rand_y = get_random_window(anchor_box, chip_size)
-        window = ((rand_x, rand_x + chip_size), (rand_y, rand_y + chip_size))
+        window = ((rand_y, rand_y + chip_size), (rand_x, rand_x + chip_size))
         chip_im = np.transpose(
             image_dataset.read(window=window), axes=[1, 2, 0])
         # XXX is this specific to the dataset?
@@ -172,10 +173,11 @@ def make_chips(image_path, json_path, output_dir, debug=False,
                 # you are trying to detect are black boxes :)
                 clip_xmin, clip_ymin, clip_xmax, clip_ymax = \
                     np.clip(chip_box, 0, chip_size)
-                redacted_chip_im[clip_xmin:clip_xmax, clip_ymin:clip_ymax, :] = 0   # noqa
+                redacted_chip_im[clip_ymin:clip_ymax, clip_xmin:clip_xmax, :] = 0   # noqa
 
         # save the chip.
         chip_path = join(output_image_dir, chip_file_name)
+
         imsave(chip_path, redacted_chip_im)
         if debug:
             make_debug_plot(output_debug_dir, chip_boxes, chip_ind,

@@ -36,10 +36,10 @@ def create_tf_example(image_dir, image_file_name, boxes, category_index):
     classes_text = []
     classes = []
     for box in boxes:
-        xmins.append(box.xmin)
-        xmaxs.append(box.xmax)
-        ymins.append(box.ymin)
-        ymaxs.append(box.ymax)
+        xmins.append(box.xmin / width)
+        xmaxs.append(box.xmax / width)
+        ymins.append(box.ymin / height)
+        ymaxs.append(box.ymax / height)
         class_id = int(box.class_id)
         classes_text.append(
             category_index[class_id]['name'].encode('utf8'))
