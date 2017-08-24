@@ -117,7 +117,10 @@ def predict(frozen_graph_path, label_map_path, input_dir,
 
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    description = """
+        Make predictions over a directory of images and write results to CSV.
+    """
+    parser = argparse.ArgumentParser(description=description)
 
     parser.add_argument('--frozen-graph-path')
     parser.add_argument('--label-map-path')
@@ -130,5 +133,6 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     print(args)
+
     predict(args.frozen_graph_path, args.label_map_path, args.input_dir,
             args.output_dir)

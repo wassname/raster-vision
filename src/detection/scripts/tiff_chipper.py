@@ -189,24 +189,22 @@ def make_chips(image_path, json_path, output_dir, debug=False,
 
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    description = """
+        Generate a set of training chips and a CSV from a GeoTIFF and GeoJSON
+        file containing labels in the form of polygon bounding boxes.
+    """
+    parser = argparse.ArgumentParser(description=description)
     parser.add_argument('--tiff-path')
     parser.add_argument('--json-path')
     parser.add_argument('--output-dir')
     parser.add_argument('--debug', dest='debug', action='store_true')
     parser.add_argument('--chip-size', type=int, default=300)
-    args = parser.parse_args()
-
-    print('tiff_path: {}'.format(args.tiff_path))
-    print('json_path: {}'.format(args.json_path))
-    print('output_dir: {}'.format(args.output_dir))
-    print('debug: {}'.format(args.debug))
-    print('chip_size: {}'.format(args.chip_size))
-
-    return args
+    return parser.parse_args()
 
 
 if __name__ == '__main__':
     args = parse_args()
+    print(args)
+
     make_chips(args.tiff_path, args.json_path, args.output_dir, args.debug,
                args.chip_size)

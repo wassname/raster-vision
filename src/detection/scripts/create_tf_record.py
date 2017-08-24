@@ -124,7 +124,10 @@ def create_tf_records(data_dir, output_dir, label_map_path):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    description = """
+        Convert training chips and CSV into TFRecord format which TF needs.
+    """
+    parser = argparse.ArgumentParser(description=description)
 
     parser.add_argument('--data-dir')
     parser.add_argument('--output-dir')
@@ -136,5 +139,6 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     print(args)
+
     create_tf_records(
         args.data_dir, args.output_dir, args.label_map_path)

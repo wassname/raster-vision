@@ -284,7 +284,12 @@ def aggregate_predictions(image_path, window_info_path, predictions_path,
 
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    description = """
+        Aggregate predictions from windows into predictions over original
+        image. The output is GeoJSON in the CRS of the input image.
+    """
+    parser = argparse.ArgumentParser(description=description)
+
     parser.add_argument('--image-path')
     parser.add_argument('--window-info-path')
     parser.add_argument('--predictions-path')
@@ -294,18 +299,10 @@ def parse_args():
     return parser.parse_args()
 
 
-def run():
+if __name__ == '__main__':
     args = parse_args()
-    print('image_path: {}'.format(args.image_path))
-    print('window_info_path: {}'.format(args.window_info_path))
-    print('predictions_path: {}'.format(args.predictions_path))
-    print('labels_map_path: {}'.format(args.label_map_path))
-    print('output_dir: {}'.format(args.output_dir))
+    print(args)
 
     aggregate_predictions(
         args.image_path, args.window_info_path, args.predictions_path,
         args.label_map_path, args.output_dir)
-
-
-if __name__ == '__main__':
-    run()

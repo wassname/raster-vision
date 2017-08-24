@@ -3,9 +3,9 @@
 DATA=$1
 # DATA=singapore_ships_chips_tiny
 CONFIG=$2
-# CONFIG=/opt/src/detection/config/ssd_mobilenet_v1_pets.config
+# CONFIG=/opt/src/detection/configs/ssd_mobilenet_v1_pets.config
 RUN=$3
-# RUN="pets0"
+# RUN="ships0"
 SYNC_INTERVAL="15m"
 
 cd /opt/src/detection
