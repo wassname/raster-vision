@@ -96,7 +96,7 @@ class FileGenerator(Generator):
         else:
             self.channel_stats = self.compute_channel_stats(100, False)
 
-    def compute_split_probs(self):
+    def compute_split_probs(self, name=None):
         return None
 
     def calibrate_image(self, normalized_image):
